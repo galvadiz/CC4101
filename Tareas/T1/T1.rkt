@@ -59,6 +59,14 @@ RUT: 19872851-9
 
 ;; Parte f)
 ;; mysterious-cf :: Integer -> CFraction
+(define (mysterious-cf n)
+  (if (zero? n)
+      (simple 3)
+      (compound 3 1 ((lambda (cf) (match cf
+                                   [(simple v) (simple (* 2 v))]
+                                   [(compound a b d) (compound (* 2 a) (expt (+ 2 b) 2) d)]))
+
+                     (mysterious-cf (- n 1))))))
 
 
 
