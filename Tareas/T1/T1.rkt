@@ -58,15 +58,15 @@ RUT: 19872851-9
 
 
 ;; Parte f)
-;; mysterious-cf :: Integer -> CFraction
-(define (mysterious-cf n)
+;; mysterious-cf :: Integer [Integer] -> CFraction
+(define (mysterious-cf n [m 1])
   (if (zero? n)
       (simple 3)
       (compound 3 1 ((lambda (cf) (match cf
                                    [(simple v) (simple (* 2 v))]
-                                   [(compound a b d) (compound (* 2 a) (expt (+ 2 b) 2) d)]))
+                                   [(compound a b d) (compound (* 2 a) (expt (+ (* 2 m) b) 2) d)]))
 
-                     (mysterious-cf (- n 1))))))
+                     (mysterious-cf (- n 1) (+ m 1))))))
 
 
 
@@ -93,6 +93,12 @@ RUT: 19872851-9
 
 ;; Parte h)
 ;; rac-to-cf :: Rational -> CFraction
+;; Transforma un número racional no-negativo en su representación en forma de fracción continua.
+(define (rac-to-cf r)
+  (if (zero? (- r (floor r)))
+      (simple (exact-floor r))
+      (compound (exact-floor r) 1 (rac-to-cf (/ (- r (floor r)))))))
+      
 
 
 
