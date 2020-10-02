@@ -20,8 +20,11 @@ RUT: 19872851-9
 
 ;; Parte b)
 ;; eval :: CFraction -> Rational
-
-
+;; Evalúa una fracción continua, devolviendo el número racional que representa.
+(define (eval cfraction)
+  (match cfraction
+    [(simple v) v]
+    [(compound a b d) (+ a (/ b (eval d)))]))
 
 ;; Parte c)
 ;; degree ::  CFraction -> Integer
