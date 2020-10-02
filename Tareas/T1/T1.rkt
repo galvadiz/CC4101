@@ -59,6 +59,7 @@ RUT: 19872851-9
 
 ;; Parte f)
 ;; mysterious-cf :: Integer [Integer] -> CFraction
+;; Genera una secuencia de n fracciones continuas.
 (define (mysterious-cf n [m 1])
   (if (zero? n)
       (simple 3)
@@ -84,11 +85,11 @@ RUT: 19872851-9
   (map fl
        (map eval
             (map mysterious-cf
-                 (from-to 0 n)))))
+                 (from-to 0 (- n 1))))))
 
 
 ;; A que numero tiende (mysterious-cf k) cuando k tiende a infinito?
-
+;; Tiende a Pi (3.1415926535897...) (el mejor número del mundo sipsip)
 
 
 ;; Parte h)
@@ -99,14 +100,3 @@ RUT: 19872851-9
       (simple (exact-floor r))
       (compound (exact-floor r) 1 (rac-to-cf (/ (- r (floor r)))))))
       
-
-
-
-
-
-
-
-
-
-
-
