@@ -8,7 +8,14 @@ RUT: 19872851-9
 |#
 
 ;; Parte a)
-
+#|
+<CFraction> ::= (simple <value>)
+             |  (compound <value> <value> <CFraction>
+|#
+(deftype CFraction
+  (simple value)
+  (compound a b cfraction))
+  
 
 
 ;; Parte b)
