@@ -37,8 +37,13 @@ RUT: 19872851-9
 
 ;; Parte d)
 ;; fold :: (Integer -> A) (Integer Integer A -> A) -> (CFraction -> A)
-
-
+;; Captura el esquema de recursión asociado a CFraction.
+(define (fold f g)
+  (λ (cfraction)
+    (match cfraction
+      [(simple v) (f v)]
+      [(compound a b d) (g a b ((fold f g) d))])))
+  
 
 ;; Parte e)
 ;; eval2 :: CFraction -> Rational
