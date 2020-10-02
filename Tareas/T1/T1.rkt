@@ -28,7 +28,11 @@ RUT: 19872851-9
 
 ;; Parte c)
 ;; degree ::  CFraction -> Integer
-
+;; Devuelve el grado de una fracción continua.
+(define (degree cfraction)
+  (match cfraction
+    [(simple _) 0]
+    [(compound _ _ d) (+ 1 (degree d))]))
 
 
 ;; Parte d)
