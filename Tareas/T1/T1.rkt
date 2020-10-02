@@ -47,9 +47,14 @@ RUT: 19872851-9
 
 ;; Parte e)
 ;; eval2 :: CFraction -> Rational
+;; Evalúa una fracción continua usando fold.
+(define eval2
+  (fold identity (λ (a b c) (+ a (/ b c)))))
 
 ;; degree2 ::  CFraction -> Integer
-
+;; Devuelve el grado de una función continua usando fold.
+(define degree2
+  (fold (λ (v) 0) (λ (a b c) (+ 1 c))))
 
 
 ;; Parte f)
