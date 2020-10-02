@@ -72,8 +72,20 @@ RUT: 19872851-9
 
 ;; Parte g)
 ;; from-to :: Integer -> Integer -> listOf Integer
-
+;; Construye una lista de enteros comprendidos entre dos enteros dados
+(define (from-to ni nf)
+  (if (zero? (- nf ni))
+      (cons nf empty)
+      (cons ni (from-to (+ 1 ni) nf))))
+          
 ;; mysterious-list :: Integer -> listOf Float
+;; Devuelve la lista de los primeros n valores de la mysterious-cf.
+(define (mysterious-list n)
+  (map fl
+       (map eval
+            (map mysterious-cf
+                 (from-to 0 n)))))
+
 
 ;; A que numero tiende (mysterious-cf k) cuando k tiende a infinito?
 
