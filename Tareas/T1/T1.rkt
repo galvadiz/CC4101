@@ -26,6 +26,7 @@ RUT: 19872851-9
     [(simple v) v]
     [(compound a b d) (+ a (/ b (eval d)))]))
 
+
 ;; Parte c)
 ;; degree ::  CFraction -> Integer
 ;; Devuelve el grado de una fracción continua.
@@ -63,11 +64,13 @@ RUT: 19872851-9
 (define (mysterious-cf n [m 1])
   (if (zero? n)
       (simple 3)
-      (compound 3 1 ((lambda (cf) (match cf
+      (if (< n 0)
+          (error "Error: argumento negativo")
+          (compound 3 1 ((lambda (cf) (match cf
                                    [(simple v) (simple (* 2 v))]
                                    [(compound a b d) (compound (* 2 a) (expt (+ (* 2 m) b) 2) d)]))
 
-                     (mysterious-cf (- n 1) (+ m 1))))))
+                     (mysterious-cf (- n 1) (+ m 1)))))))
 
 
 
@@ -75,17 +78,23 @@ RUT: 19872851-9
 ;; from-to :: Integer -> Integer -> listOf Integer
 ;; Construye una lista de enteros comprendidos entre dos enteros dados
 (define (from-to ni nf)
-  (if (zero? (- nf ni))
-      (cons nf empty)
-      (cons ni (from-to (+ 1 ni) nf))))
+  (if (< nf ni)
+      (error "Error: Entero final es menor que el inicial")
+      (if (zero? (- nf ni))
+          (cons nf empty)
+          (cons ni (from-to (+ 1 ni) nf)))))
           
 ;; mysterious-list :: Integer -> listOf Float
 ;; Devuelve la lista de los primeros n valores de la mysterious-cf.
 (define (mysterious-list n)
-  (map fl
-       (map eval
-            (map mysterious-cf
-                 (from-to 0 (- n 1))))))
+  (if (< n 0)
+      (error "Error: argumento negativo")
+      (if (zero? n)
+          empty
+          (map fl
+               (map eval
+                    (map mysterious-cf
+                         (from-to 0 (- n 1))))))))
 
 
 ;; A que numero tiende (mysterious-cf k) cuando k tiende a infinito?
@@ -96,7 +105,9 @@ RUT: 19872851-9
 ;; rac-to-cf :: Rational -> CFraction
 ;; Transforma un número racional no-negativo en su representación en forma de fracción continua.
 (define (rac-to-cf r)
-  (if (zero? (- r (floor r)))
-      (simple (exact-floor r))
-      (compound (exact-floor r) 1 (rac-to-cf (/ (- r (floor r)))))))
-      
+  (if (< r 0)
+      (error "Error: argumento negativo")
+      (if (zero? (- r (floor r)))
+          (simple (exact-floor r))
+          (compound (exact-floor r) 1 (rac-to-cf (/ (- r (floor r))))))))
+  
